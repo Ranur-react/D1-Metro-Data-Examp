@@ -4,7 +4,7 @@ public class Program
 {
 	public static void Main()
 	{
-		MenuApp MenuApps=new MenuApp("Aplikasi Penjualan Bengkel");
+		MenuApp MenuApps=new MenuApp("Aplikasi Penjualan Kasir");
 		
 		bool ulang=true;
 		while(ulang){
