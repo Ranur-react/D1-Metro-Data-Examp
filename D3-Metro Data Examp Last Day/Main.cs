@@ -106,6 +106,7 @@ class Matakuliahmhs : Mahasiswa{
 //pemanfaatna 
 
 public class Matakuliah{
+	public static List<String> DaftarMatakuliah=new List<String>();
 	public Matakuliah(){
 	//constructor
 		formInput();
@@ -125,41 +126,23 @@ public class Matakuliah{
 		   tl.setWidth(120);
 		//--------end
 		 tb.fieldHeader("Form Input Matakuliah");
+		bool ulang=true;
+		do{
 		tr.setAlign("left");
 		tr.field(" Note:  Press Key Q/q for Exit this Menu ,\"(10 max input data) \" ");
-		//Show data Matakuliah before input
-		DataMatakuliah[] Mtk=new DataMatakuliah[10];
-		int n=0;
-				while(state){
-					String[] textBox={"Kode Matakuliah", "Nama Matakuliah","Jumlah SKS"};
-					String[] getText=new String[3];
-					int index=0;	
-					foreach(String i in textBox){
-						ts.setAlign("left");
-						ts.setWidth(120);
-						ts.field("Masukan "+i+" :");
-						String getInput=Console.ReadLine();
-							if(getInput=="Q"|getInput=="q"){
-								state=false;
-								break;
-							}else{
-								getText[index]=getInput;
-								index++;
-							}
-						}
-					if(state){
-						Mtk[n]=new DataMatakuliah(getText);
-						tb.setAlign("center");
-					tr.setWidth(60);
-					tl.setWidth(60);
-					//--------end
-						tr.field("Daftar Matakuliah");
-						tl.field(Mtk[n].getKode());
-					}
-					//ShowMatakuliah();
-					
-
-				}
+			//Show data Matakuliah before input--------
+			ShowMatakuliah();
+			ts.setAlign("left");
+			ts.field(" Tambah Matakuliah :");
+			String getData=Console.ReadLine();
+			
+			if(getData == "q"||getData == "Q"){
+				ulang=false;
+			}else{
+			DaftarMatakuliah.Add(getData);
+			}
+		}
+		while(ulang);
 			}
 	public void ShowMatakuliah(){
 		Table tb=new Table();
@@ -167,66 +150,22 @@ public class Matakuliah{
 		tbodyLine tl=new tbodyLine();
 		tbodySpace ts=new tbodySpace();
 		//seting class table
-		   tb.setWidth(120);
-		   ts.setWidth(60);
-
-	       tb.setAlign("center");
+		   tb.setWidth(60);
 		   tr.setWidth(60);
+		   ts.setWidth(60);
 		   tl.setWidth(60);
 		//--------end
-		DataMatakuliah[] DM =new DataMatakuliah[10];
-			
-			tr.field("Daftar Matakuliah");
-			tl.field(DM[0].getKode());
+				tr.field("List Matakuliah :");
+			int no=1;
+			for(int n=0;n<DaftarMatakuliah.Count;n++){
+			   ts.setAlign("left");
+				ts.field(no+". "+DaftarMatakuliah[n]);
+				no++;
+			}
+		tr.field("");
 	}
 }
 
-
-
-//objek menyimpan matakuliah
-public class DataMatakuliah:Matakuliah{
-	public String kode;
-	public String nama;
-	public int sks;
-	public DataMatakuliah(){
-	//constructor
-		kode="noName";
-		nama="noAddress";
-		sks=0;
-	}
-	public  DataMatakuliah(String[] n){
-	//constructor
-		kode=n[0];
-		nama=n[1];
-		sks=int.Parse(n[2]);
-	}
-	public String[] DisplayMatakuliahAll(){
-		String[] Output=new String[3];
-			Output[0]=kode;
-			Output[1]=nama;
-			Output[2]=sks.ToString();
-		return Output;
-	}
-	public void setKode(String n){
-		kode=n;
-	}
-	public String getKode(){
-		return kode;
-	}
-	public void setNama(String n){
-		nama=n;
-	}
-	public String getNama(){
-		return nama;
-	}
-	public void setSks(int n){
-		sks=n;
-	}
-	public int getSks(){
-		return sks;
-	}
-}
-	
 //Table Design  - - - - - - -
 public class Layout{
 	//Overriding Example on a method
