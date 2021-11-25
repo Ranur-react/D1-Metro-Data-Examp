@@ -158,13 +158,40 @@ public class Matakuliah{
 							NU.Add('D');
 						}
 						Char NUX=NU[i];
-						ts.field("Nilai QUIS ="+QS.ToString());
-						ts.field("Nilai Angka ="+NAX.ToString());
-						ts.field("Nilai HURUF ="+NUX.ToString());
+						TampilkanDataNilai();
+						
 					}
 			i++;
 			}
 			while(ulang);
+	}
+	public static void TampilkanDataNilai(){
+		Table tb=new Table();
+		tbody tr=new tbody();
+		tbodyLine tl=new tbodyLine();
+		tbodySpace ts=new tbodySpace();
+		//seting class table
+		   tb.setAlign("center");
+		   tb.setWidth(120);
+		   tr.setWidth(120);
+		   ts.setWidth(120);
+		   tl.setWidth(120);
+		//--------end
+		 tb.fieldHeader("DAFTAR NILAI MATAKULIAH");
+		for(int i=0;i<NM.Count;i++){
+						Double QS=QUIS[i];
+						Double UT=UTS[i];
+						Double UA=UAS[i];
+						Double NAX=NA[i];
+						Char NUX=NU[i];
+						ts.setAlign("left");
+						ts.field((i+1).ToString()+". "+NM[i]);
+						ts.field("  Nilai QUIS ="+QS.ToString());
+						ts.field("  Nilai UTS ="+UT.ToString());
+						ts.field("  Nilai UAS ="+UA.ToString());
+						ts.field("  Total Nilai ="+NAX.ToString());
+						ts.field("  Nilai HURUF ="+NUX.ToString());
+		}
 	}
 	public static bool InputNilai(int u){
 	bool state=true;
@@ -196,21 +223,21 @@ public class Matakuliah{
 				switch(index){
 					case 0:
 						NM.Add(DaftarMatakuliah[int.Parse(getdata)]);
-							Console.WriteLine(getdata);
+							//Console.WriteLine(getdata);
 						break;
 					case 1:
 						QUIS.Add(Double.Parse(getdata));
-						Console.WriteLine("Keadaan Quis");
-						Console.WriteLine(QUIS.Count);
+						//Console.WriteLine("Keadaan Quis");
+						//Console.WriteLine(QUIS.Count);
 						break;
 					case 2:
 						UTS.Add(Double.Parse(getdata));
-						Console.WriteLine("Keadaan UTS");
-						Console.WriteLine(UTS.Count);
+						//Console.WriteLine("Keadaan UTS");
+						//Console.WriteLine(UTS.Count);
 						break;
 					default:
 						UAS.Add(Double.Parse(getdata));
-						Console.WriteLine(getdata);
+						//Console.WriteLine(getdata);
 						break;
 							}
 				index++;
