@@ -54,7 +54,7 @@ public class AppMenu{
 		ts.setAlign("left");
 		ts.field("Masukan Nomor Menu : ");
 		int menuSelect=Convert.ToInt16(Console.ReadLine());
-		
+		Matakuliah mtk =new Matakuliah();
 			switch(menuSelect){
 				case 0:
 					ts.field("Kamu Memilih Menu :\""+menu[menuSelect]+" ("+menuSelect+")\" yang masih dalam mode Development (Interface)");
@@ -70,11 +70,13 @@ public class AppMenu{
 				case 2:
 					ts.field("Kamu Memilih Menu :\""+menu[menuSelect]+" ("+menuSelect+")\"");
 				//	Input Matakuliah class;
-					Matakuliah mtk =new Matakuliah();
+					
+						mtk.formInput();
 					break;		
 				case 3:
 					ts.field("Kamu Memilih Menu :\""+menu[menuSelect]+" ("+menuSelect+")\"");
 				//	Input Nilai class;
+					mtk.ShowMatakuliah();
 					break;	
 				 default:
 					state=false;
@@ -109,8 +111,9 @@ public class Matakuliah{
 	public static List<String> DaftarMatakuliah=new List<String>();
 	public Matakuliah(){
 	//constructor
-		formInput();
+		
 	}
+	
 	public void formInput(){
 		bool state=true;
 		//call all Objke/class
