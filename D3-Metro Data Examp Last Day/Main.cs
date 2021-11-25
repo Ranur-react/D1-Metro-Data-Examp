@@ -113,9 +113,9 @@ public class Matakuliah{
 	public static List<String> NM=new List<String>();
 	public static List<Char> NU=new List<Char>();
 	public static List<Double> NA=new List<Double>();
-	public static List<int> UAS=new List<int>();
-	public static List<int> UTS=new List<int>();
-	public static List<int> QUIS=new List<int>();
+	public static  List<Double> UAS=new List<Double>();
+	public static List<Double> UTS=new List<Double>();
+	public static List<Double> QUIS=new List<Double>();
 	public Matakuliah(){
 	//constructor
 	}
@@ -143,6 +143,24 @@ public class Matakuliah{
 					if(!InputNilai(i)){
 					ulang=false;
 						Console.WriteLine("Stop Input  Nilai . . !!");
+					}else{
+						Double NilaiAngka=(QUIS[i]*0.2)+(UTS[i]*0.3)+(UAS[i]*0.5);
+						NA.Add(NilaiAngka);
+						Double QS=QUIS[i];
+						Double NAX=NA[i];
+						if(NAX>85){
+							NU.Add('A');
+						}else if(NAX>65){
+							NU.Add('B');
+						}else if(NAX>45){
+							NU.Add('C');
+						}else{
+							NU.Add('D');
+						}
+						Char NUX=NU[i];
+						ts.field("Nilai QUIS ="+QS.ToString());
+						ts.field("Nilai Angka ="+NAX.ToString());
+						ts.field("Nilai HURUF ="+NUX.ToString());
 					}
 			i++;
 			}
@@ -168,12 +186,9 @@ public class Matakuliah{
 				ts.field("Pilih Nama ( "+TampilPanggilMatakuliah()+" )");
 			}else{
 				ts.field("Masukan Nilai Untuk ( "+NM[u]+" )");
-			
 			}
 			ts.field("\n -"+t+":");			
-			
 			String getdata=Console.ReadLine();
-			Console.WriteLine(getdata);
 			if(getdata=="Q"|getdata=="q"){
 				state=false;
 				break;
@@ -181,34 +196,26 @@ public class Matakuliah{
 				switch(index){
 					case 0:
 						NM.Add(DaftarMatakuliah[int.Parse(getdata)]);
+							Console.WriteLine(getdata);
 						break;
 					case 1:
-						QUIS.Add(int.Parse(getdata));
+						QUIS.Add(Double.Parse(getdata));
+						Console.WriteLine("Keadaan Quis");
+						Console.WriteLine(QUIS.Count);
 						break;
 					case 2:
-						UTS.Add(int.Parse(getdata));
+						UTS.Add(Double.Parse(getdata));
+						Console.WriteLine("Keadaan UTS");
+						Console.WriteLine(UTS.Count);
 						break;
 					default:
-						UAS.Add(int.Parse(getdata));
-						
-						Double NilaiAngka=(QUIS[u]*0.2)+(UTS[u]*0.3)+(UAS[u]*0.5);
-						NA.Add(NilaiAngka);
-						if(NilaiAngka>85){
-							NU[u]='A';
-						}else if(NA[u]>65){
-							NU[u]='B';
-						}else if(NA[u]>45){
-							NU[u]='C';
-						}else{
-							NU[u]='D';
-						}
-						ts.field("Nilai Angka Untuk Matakuliah"+NM[u]+" Adalah= "+NA[u]+"("+NU[u]+")");
+						UAS.Add(Double.Parse(getdata));
+						Console.WriteLine(getdata);
 						break;
-			}
-				
+							}
 				index++;
+				}
 		}
-	}
 	return state;
 	}
 	public static String TampilPanggilMatakuliah(){
