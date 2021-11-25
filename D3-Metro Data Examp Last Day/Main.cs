@@ -5,6 +5,34 @@ public class Program
 {
 	public static void Main()
 	{
+		AppMenu MenuApps=new AppMenu("STMIK Jayanusa");
+		bool ulang=true;
+		while(ulang){
+		  //MenuApp.menu=\\\;
+			ulang=MenuApps.displayMenu();	
+		}
+	}
+}
+public class AppMenu{
+	public String appTitle;	
+	private static String[] menu={"Mahasiswa","Jurusan","Matakuliah","Nilai","Keluar"}; //saya igin membuat data ini dinamis ditambahkan disaatn Objek ini dipanggil taip tidak tau yang bagaiaman mengganti nilai array variabel  sebuah objek ketika pemanggilan objek , masih bingung
+	public AppMenu(){
+		appTitle="Aplikasi Input Nilai Matakuliah";
+	}
+	public AppMenu(String n){
+		appTitle+=(" "+n);
+	}
+	private String eachMenu(){
+		int n=0;
+		String resp="";
+		foreach(String x in menu){
+			resp+="| "+x+"("+n+") |";
+		++n;
+		}
+		return resp;
+	} 
+	public bool displayMenu(){
+		bool state=true;
 		//call all Objke/class
 		Table tb=new Table();
 		tbody tr=new tbody();
@@ -13,60 +41,177 @@ public class Program
 		//seting class table
 		   tb.setAlign("center");
 		   tb.setWidth(120);
+		   tr.setWidth(120);
+		   ts.setWidth(120);
+		   tl.setWidth(120);
 		//--------end
-		   tb.fieldHeader("Aplikasi Multple Input Data Sederhana ");
-		//----input data karyawan
-		DataKaryawan[] tb_karyawan=new DataKaryawan[10];
-		bool state=true;
-		int n=0;
-		while(state){
-			String[] textBox={"Nama", "Alamat","Nomor HP"};
-			String[] getText=new String[3];
-			int index=0;	
-			foreach(String i in textBox){
-		   		tb.setWidth(120);
-				ts.setAlign("left");
-				ts.field("Masukan "+i+" :");
-				String getInput=Console.ReadLine();
-					if(getInput=="Q"|getInput=="q"){
-						state=false;
-						break;
-					}else{
-						getText[index]=getInput;
-						index++;
-					}
-				}
-			if(state){
-				tb_karyawan[n]=new DataKaryawan(getText);
-			}
-			
-		}
+		   tb.fieldHeader(appTitle);
+		int menulenth = -1 + menu.Length;
+		tr.setAlign("left");
+		tr.field(" Note:  Press Key  Number Pad  0 - "+menulenth+"  Button to Change Menu ");
+		tr.setAlign("center");
+		tr.field(eachMenu());
+		ts.setAlign("left");
+		ts.field("Masukan Nomor Menu : ");
+		int menuSelect=Convert.ToInt16(Console.ReadLine());
+		
+			switch(menuSelect){
+				case 0:
+					ts.field("Kamu Memilih Menu :\""+menu[menuSelect]+" ("+menuSelect+")\" yang masih dalam mode Development (Interface)");
+					tl.field("");
+					//Interface  on the class
+					Matakuliahmhs mhs=new Matakuliahmhs();
+					break;
+				case 1:
+					ts.field("Kamu Memilih Menu :\""+menu[menuSelect]+" ("+menuSelect+")\" yang masih dalam mode Development (Abstract)");
+					//example Abstract on the class
+					Jurusan JR=new Jurusan();
+					break;
+				case 2:
+					ts.field("Kamu Memilih Menu :\""+menu[menuSelect]+" ("+menuSelect+")\"");
+				//	Input Matakuliah class;
+					Matakuliah mtk =new Matakuliah();
+					break;		
+				case 3:
+					ts.field("Kamu Memilih Menu :\""+menu[menuSelect]+" ("+menuSelect+")\"");
+				//	Input Nilai class;
+					break;	
+				 default:
+					state=false;
+					ts.field("kamu Mengakhiri Aplikasi");
+					break;
+			}	
+		return state;
 	}
-
 }
 
-public class DataKaryawan{
+//pemanfaat Abstarct pada Menu Data Jurusan
+abstract public class Fakultas{
+		public abstract void setFakultas();
+}
+public class Jurusan:Fakultas{
+	public override void setFakultas(){
+		Console.WriteLine("---(abstract)Jurusan dan Mahasiswa dibuat oleh Developer lainnya ---");
+	}
+}
+//pemanfaat Interface pada Menu Data Mahasiswa
+ interface  Mahasiswa{
+		 void setMahasiswa();
+}
+class Matakuliahmhs : Mahasiswa{
+	public void setMahasiswa(){
+		Console.WriteLine("---(interface) Jurusan dan Mahasiswa dibuat oleh Developer lainnya ---");
+	}
+}
+//pemanfaatna 
+
+public class Matakuliah{
+	public Matakuliah(){
+	//constructor
+		formInput();
+	}
+	public void formInput(){
+		bool state=true;
+		//call all Objke/class
+		Table tb=new Table();
+		tbody tr=new tbody();
+		tbodyLine tl=new tbodyLine();
+		tbodySpace ts=new tbodySpace();
+		//seting class table
+		   tb.setAlign("center");
+		   tb.setWidth(120);
+		   tr.setWidth(120);
+		   ts.setWidth(120);
+		   tl.setWidth(120);
+		//--------end
+		 tb.fieldHeader("Form Input Matakuliah");
+		tr.setAlign("left");
+		tr.field(" Note:  Press Key Q/q for Exit this Menu ,\"(10 max input data) \" ");
+		//Show data Matakuliah before input
+		DataMatakuliah[] Mtk=new DataMatakuliah[10];
+		int n=0;
+				while(state){
+					String[] textBox={"Kode Matakuliah", "Nama Matakuliah","Jumlah SKS"};
+					String[] getText=new String[3];
+					int index=0;	
+					foreach(String i in textBox){
+						ts.setAlign("left");
+						ts.setWidth(120);
+						ts.field("Masukan "+i+" :");
+						String getInput=Console.ReadLine();
+							if(getInput=="Q"|getInput=="q"){
+								state=false;
+								break;
+							}else{
+								getText[index]=getInput;
+								index++;
+							}
+						}
+					if(state){
+						Mtk[n]=new DataMatakuliah(getText);
+						tb.setAlign("center");
+					tr.setWidth(60);
+					tl.setWidth(60);
+					//--------end
+						tr.field("Daftar Matakuliah");
+						tl.field(Mtk[n].getKode());
+					}
+					//ShowMatakuliah();
+					
+
+				}
+			}
+	public void ShowMatakuliah(){
+		Table tb=new Table();
+		tbody tr=new tbody();
+		tbodyLine tl=new tbodyLine();
+		tbodySpace ts=new tbodySpace();
+		//seting class table
+		   tb.setWidth(120);
+		   ts.setWidth(60);
+
+	       tb.setAlign("center");
+		   tr.setWidth(60);
+		   tl.setWidth(60);
+		//--------end
+		DataMatakuliah[] DM =new DataMatakuliah[10];
+			
+			tr.field("Daftar Matakuliah");
+			tl.field(DM[0].getKode());
+	}
+}
+
+
+
+//objek menyimpan matakuliah
+public class DataMatakuliah:Matakuliah{
+	public String kode;
 	public String nama;
-	public String alamat;
-	public int hp;
-	public DataKaryawan(){
+	public int sks;
+	public DataMatakuliah(){
 	//constructor
-		nama="noName";
-		alamat="noAddress";
-		hp=0;
+		kode="noName";
+		nama="noAddress";
+		sks=0;
 	}
-	public  DataKaryawan(String[] n){
+	public  DataMatakuliah(String[] n){
 	//constructor
-		nama=n[0];
-		alamat=n[1];
-		hp=int.Parse(n[2]);
+		kode=n[0];
+		nama=n[1];
+		sks=int.Parse(n[2]);
 	}
-	public String[] DisplayKaryawanAll(){
+	public String[] DisplayMatakuliahAll(){
 		String[] Output=new String[3];
-			Output[0]=nama;
-			Output[1]=alamat;
-			Output[2]=hp.ToString();
+			Output[0]=kode;
+			Output[1]=nama;
+			Output[2]=sks.ToString();
 		return Output;
+	}
+	public void setKode(String n){
+		kode=n;
+	}
+	public String getKode(){
+		return kode;
 	}
 	public void setNama(String n){
 		nama=n;
@@ -74,20 +219,14 @@ public class DataKaryawan{
 	public String getNama(){
 		return nama;
 	}
-	public void setAlamat(String n){
-		alamat=n;
+	public void setSks(int n){
+		sks=n;
 	}
-	public String getAlamat(){
-		return alamat;
-	}
-	public void setHp(int n){
-		hp=n;
-	}
-	public int getHp(){
-		return hp;
+	public int getSks(){
+		return sks;
 	}
 }
-
+	
 //Table Design  - - - - - - -
 public class Layout{
 	//Overriding Example on a method
