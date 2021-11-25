@@ -77,6 +77,7 @@ public class AppMenu{
 					ts.field("Kamu Memilih Menu :\""+menu[menuSelect]+" ("+menuSelect+")\"");
 				//	Input Nilai class;
 					mtk.ShowMatakuliah();
+					mtk.formInputNilai();
 					break;	
 				 default:
 					state=false;
@@ -109,11 +110,115 @@ class Matakuliahmhs : Mahasiswa{
 
 public class Matakuliah{
 	public static List<String> DaftarMatakuliah=new List<String>();
+	public static List<String> NM=new List<String>();
+	public static List<Char> NU=new List<Char>();
+	public static List<Double> NA=new List<Double>();
+	public static List<int> UAS=new List<int>();
+	public static List<int> UTS=new List<int>();
+	public static List<int> QUIS=new List<int>();
 	public Matakuliah(){
 	//constructor
-		
 	}
-	
+	public void formInputNilai(){
+		Table tb=new Table();
+		tbody tr=new tbody();
+		tbodyLine tl=new tbodyLine();
+		tbodySpace ts=new tbodySpace();
+		//seting class table
+		   tb.setAlign("center");
+		   tb.setWidth(120);
+		   tr.setWidth(120);
+		   ts.setWidth(120);
+		   tl.setWidth(120);
+		//--------end
+		 tb.fieldHeader("Form Input NILAI Matakuliah");
+		 bool ulang=true;
+		  int i=0;
+			do{
+				tl.setAlign("center");
+				ts.setAlign("left");
+				//LihatBarang();
+				tl.field(" Masukan Nilai ");
+				ts.field("| Note: (Enter= continue , Q|q = stop ) \t\t");
+					if(!InputNilai(i)){
+					ulang=false;
+						Console.WriteLine("Stop Input  Nilai . . !!");
+					}
+			i++;
+			}
+			while(ulang);
+	}
+	public static bool InputNilai(int u){
+	bool state=true;
+		Table tb=new Table();
+		tbody tr=new tbody();
+		tbodyLine tl=new tbodyLine();
+		tbodySpace ts=new tbodySpace();
+		//seting class table
+		   tb.setAlign("center");
+		   tb.setWidth(120);
+		   tr.setWidth(120);
+		   ts.setWidth(120);
+		   tl.setWidth(120);
+		//--------end
+		String[] TextInput={"Matakuliah","Nilai QUIS","Nilai UTS","Nilai UAS"};
+		int index=0;
+		foreach(String t in TextInput){
+			if(index==0){
+				ts.field("Pilih Nama ( "+TampilPanggilMatakuliah()+" )");
+			}else{
+				ts.field("Masukan Nilai Untuk ( "+NM[u]+" )");
+			
+			}
+			ts.field("\n -"+t+":");			
+			
+			String getdata=Console.ReadLine();
+			Console.WriteLine(getdata);
+			if(getdata=="Q"|getdata=="q"){
+				state=false;
+				break;
+			}else{
+				switch(index){
+					case 0:
+						NM.Add(DaftarMatakuliah[int.Parse(getdata)]);
+						break;
+					case 1:
+						QUIS.Add(int.Parse(getdata));
+						break;
+					case 2:
+						UTS.Add(int.Parse(getdata));
+						break;
+					default:
+						UAS.Add(int.Parse(getdata));
+						
+						Double NilaiAngka=(QUIS[u]*0.2)+(UTS[u]*0.3)+(UAS[u]*0.5);
+						NA.Add(NilaiAngka);
+						if(NilaiAngka>85){
+							NU[u]='A';
+						}else if(NA[u]>65){
+							NU[u]='B';
+						}else if(NA[u]>45){
+							NU[u]='C';
+						}else{
+							NU[u]='D';
+						}
+						ts.field("Nilai Angka Untuk Matakuliah"+NM[u]+" Adalah= "+NA[u]+"("+NU[u]+")");
+						break;
+			}
+				
+				index++;
+		}
+	}
+	return state;
+	}
+	public static String TampilPanggilMatakuliah(){
+		String listMtk="";
+			for(int n=0;n<DaftarMatakuliah.Count;n++){
+				int no=n+1;
+				listMtk+= DaftarMatakuliah[n]+"("+n+") ";
+			}
+		return listMtk;
+	}
 	public void formInput(){
 		bool state=true;
 		//call all Objke/class
